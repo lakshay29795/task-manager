@@ -4,7 +4,7 @@ import { DUMMY_DATA } from "./dummdata";
 
 
 const initialState: ITaskreducer= {
-    tasks: JSON.parse(localStorage.getItem("tasks")) || DUMMY_DATA,
+    tasks: JSON.parse(localStorage.getItem("tasks")) || [],
     Filter: TaskFilters.ALL,
     view: TaskView.GRID,
     dueDateSortingOrder: SortingOrder.ASC

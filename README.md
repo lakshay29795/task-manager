@@ -11,8 +11,8 @@ React TypeScript Parcel Template.
 Clone the repository:
 
 ```sh
-git clone https://github.com/remarkablemark/react-typescript-parcel-template.git
-cd react-typescript-parcel-template
+git clone https://github.com/lakshay29795/task-manager.git
+cd task-manager
 ```
 
 Install the dependencies:

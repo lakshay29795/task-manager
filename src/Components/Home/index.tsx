@@ -1,5 +1,5 @@
 import React, { use, useMemo, useState } from "react";
-import { ToggleButton, ToggleButtonGroup, List, ListItem, ListItemText, Paper, Modal, Box, TextField, Button, Stack, Chip, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
+import { ToggleButton, ToggleButtonGroup, List, ListItem, ListItemText, Paper, Modal, Box, TextField, Button, Stack, Chip, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Typography } from "@mui/material";
 
 import { fetchAllTasks, fetchSortingOrder, fetchTasksFilter, fetchTasksView } from "../../redux/selectors";
 import TaskCard from "../Common/TaskCard";
@@ -46,25 +46,20 @@ export const Home = () => {
         else tasksToReturn = tasksToReturn.filter((task) => TaskFilters[task.status] === filter);
         return sortTasksByDueDate(tasksToReturn, sortingOrder);
     }, [tasks, filter, sortingOrder]);
-    console.log({taskAction })
 
     return (
-        <Stack style={{ padding: "16px", flex: 1, overflow: 'hidden' }}>
+        <Stack style={{ padding: "16px", flex: 1, overflow: 'hidden', backgroundColor: '#E6E5E6' }}>
             {/* Toggle Button to Switch View */}
-
-            <Filters onAction={onAction}/>
-
-            {/* Grid View */}
-            {view === TaskView.GRID ? <GridView  tasks={tasksToRender} onTaskSelect={onTaskSelect} onAction={onAction}/> : <ListView tasks={tasksToRender} onTaskSelect={onTaskSelect}  onAction={onAction}/>}
-            {taskAction === ActionType.EDIT || taskAction === ActionType.ADD ? <AddEditTask task={selectedTask} taskAction={taskAction} isOpen={true} onClose={() => {
-                setSelectedTask(null);
-                setTaskAction(null);
-            }} onSave={(data) => {
-                if(taskAction === ActionType.EDIT) dispatch(updateTask(data));
-                if(taskAction === ActionType.ADD) dispatch(addTask(data));
-                setSelectedTask(null);
-            }
-            } />: null}
+            {tasks.length >0 ? <><Filters onAction={onAction}/>
+            {tasksToRender.length > 0 ? <>{
+                view === TaskView.GRID ? 
+                <GridView  tasks={tasksToRender} onTaskSelect={onTaskSelect} onAction={onAction}/> : 
+                <ListView tasks={tasksToRender} onTaskSelect={onTaskSelect}  onAction={onAction}/>
+            }</> : <Box sx={{ textAlign: 'center', padding: 4 }}>
+                <Typography variant="h4" gutterBottom>
+                    No Tasks Found
+                </Typography>
+            </Box>}
             {openDeleteDialogFortask ? <Dialog open={!!openDeleteDialogFortask} onClose={() => setOpendeleteDialogFortask(null)}>
                 <DialogTitle>Confirm Deletion</DialogTitle>
                 <DialogContent>
@@ -88,6 +83,47 @@ export const Home = () => {
                     </Button>
                 </DialogActions>
             </Dialog> : null}
+            </> : <Stack flex={1} justifyContent={'center'} alignItems={'center'}>
+            <Box sx={{ textAlign: 'center', padding: 4 }}>
+                <Typography variant="h4" gutterBottom>
+                    Welcome to Task Manager
+                </Typography>
+                
+                {/* Trigger to show Add Task Form */}
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                        onAction(ActionType.ADD)
+                    }}
+                >
+                    Add First Task
+                </Button>
+            </Box>
+                {/* <Button
+                    onClick={() => {
+                        onAction(ActionType.ADD)
+                    }}
+                    variant={"contained"}
+                    sx={{
+                        textTransform: "none",
+                        px: 3,
+                        borderRadius: "50px",
+                    }}
+                >
+                    Add Task
+            </Button> */}
+            </Stack>
+        }
+        {taskAction === ActionType.EDIT || taskAction === ActionType.ADD ? <AddEditTask task={selectedTask} taskAction={taskAction} isOpen={true} onClose={() => {
+                setSelectedTask(null);
+                setTaskAction(null);
+            }} onSave={(data) => {
+                if(taskAction === ActionType.EDIT) dispatch(updateTask(data));
+                if(taskAction === ActionType.ADD) dispatch(addTask(data));
+                setSelectedTask(null);
+            }
+            } />: null}
         </Stack>
     );
 };

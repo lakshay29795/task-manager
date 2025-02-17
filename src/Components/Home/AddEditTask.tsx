@@ -41,13 +41,13 @@ export const AddEditTask = (props: {
         setSelectedTask((prev) => (prev ? { ...prev, [key]: value } : prev));
     };
 
-    const shouldPassBasicValidation = () => !!(selectedTask?.title && selectedTask?.description && selectedTask?.status && selectedTask?.dueDate);
+    const shouldPassBasicValidation = () => !!(selectedTask?.title && selectedTask?.status && selectedTask?.dueDate);
 
     const isValidTask = () => {
 
        let isValid = shouldPassBasicValidation();
        if(isValid) {
-           isValid = tasks.findIndex((task) => task.title === selectedTask.title) === -1;
+           isValid = tasks.findIndex((task) => task.title === selectedTask.title && task.id !== selectedTask.id) === -1;
            setErrors(["Task with the same title already exists"]);
        }
         return isValid;
@@ -106,7 +106,6 @@ export const AddEditTask = (props: {
                     label="Description"
                     fullWidth
                     multiline
-                    required
                     rows={3}
                     value={selectedTask?.description}
                     onChange={(e) => handleInputChange("description", e.target.value)}

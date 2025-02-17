@@ -16,12 +16,12 @@ import {
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import { ActionType, ITask } from "../../../redux/interfaces";
+import { ActionType, ITask, TaskStatus } from "../../../redux/interfaces";
 
-const statusColors: Record<string, "success" | "warning" | "error"> = {
-    COMPLETED: "success",
-    PENDING: "warning",
-    IN_PROGRESS: "info",
+const statusColors: Record<string, "success" | "warning" | "info"> = {
+    [TaskStatus.COMPLETED]: "success",
+    [TaskStatus.PENDING]: "warning",
+    [TaskStatus.IN_PROGRESS]: "info",
 };
 
 const TaskCard = ({
