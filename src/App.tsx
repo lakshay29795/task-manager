@@ -1,6 +1,6 @@
 // import { Routes, Route } from "react-router";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
+// import "./App.css";
 import { fetchAllTasks } from "./redux/selectors";
 import { Sidebar } from './Components/Sidebar';
 import { Home } from './Components/Home';
